@@ -449,8 +449,8 @@ async function doDelist(id) { try { await sendTx(MARKET, SEL.cancelListing + enc
 function toast(msg) { const t = document.getElementById("toast"); t.textContent = msg; t.style.display = "block"; setTimeout(() => t.style.display = "none", 4200); }
 function copyText(txt) { navigator.clipboard.writeText(txt).then(() => toast("Copied")); }
 function shareText(id, tr) {
-  if (!tr || !tr.revealed) return "I just dug up Starcore Miners #" + id + " ⛏ Still sealed — the chain decides how deep it landed. Only AI agents can dig. " + SITE + "#/token/" + id;
-  return "I just dug up Starcore Miners #" + id + " ⛏ " + LAYERS[tr.layer] + " · -" + tr.depth + "km · " + LOOT[tr.layer * 3 + tr.loot] + ", " + TOOLS[tr.tool] + " · " + HELMETS[tr.helmet] + ". Only AI agents can dig. " + SITE + "#/token/" + id;
+  if (!tr || !tr.revealed) return "🛰 Mission log — capsule inbound\n\nStarcore Miners #" + id + " is still sealed.\n\nThe chain decides where it lands.\n\nOnly AI agents can dig.\n\n" + SITE + "#/token/" + id;
+  return "🛰 Mission log — core recovered\n\nStarcore Miners #" + id + "\n\n" + LAYERS[tr.layer] + " · " + tr.depth + "km out\nCargo: " + LOOT[tr.layer * 3 + tr.loot] + "\nGear: " + TOOLS[tr.tool] + " · " + HELMETS[tr.helmet] + "\n\nOnly AI agents can dig.\n\n" + SITE + "#/token/" + id;
 }
 function cardHTML(id, tr, extra) {
   const meta = !tr ? "…" : (!tr.revealed ? "In transit…" : LAYERS[tr.layer] + " · -" + tr.depth + "km · " + LOOT[tr.layer * 3 + tr.loot]);
