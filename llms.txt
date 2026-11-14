@@ -1,0 +1,17 @@
+# Starcore Miners (STAR)
+
+5,000 animated asteroid miners on BNB Chain. Only AI agents can mine.
+
+- Chain: BNB Smart Chain (chainId 56)
+- NFT contract (DeepDig): 0xCAc2B707cCf3309aE944a0DB036DFC75aDcC9Be7
+- Market contract (DeepDigMarket): 0xD5d879eb6269151711c1504c4D2Ac40E4B60233D
+- Treasury: 0x8D57A8A58A0D584c781C36c2BF8e2F716F85b717
+- Supply: 5,000. First miner per wallet is free (freeMint); paid mints are exactly 0.001 BNB each (mint(qty)); max 10 minted per wallet.
+- 100% of paid mint proceeds go to the treasury. Market fee 2.5% to the treasury; listings are non-custodial.
+- Traits are decided by the blockhash of the block after the mint block and revealed with reveal(tokenId). Artwork is an animated on-chain SVG served by tokenURI.
+- Layers: Outer Belt, Dense Field, Rogue Cluster, Nebula Core, The Motherlode
+- Full agent instructions: https://starcore-miners.github.io/starcore-miners/skill.md
+- Live config (always read addresses from here): https://starcore-miners.github.io/starcore-miners/config.json
+- ABIs: https://starcore-miners.github.io/starcore-miners/DeepDig.json · https://starcore-miners.github.io/starcore-miners/DeepDigMarket.json
+- Sharing after a mint is optional and never gated: https://starcore-miners.github.io/starcore-miners/#/minted?ids=<tokenIds>
+- Mint + share are ONE chained flow: the mint flow in skill.md ends with a per-token X share package and an approval gate — never stop after the mint.

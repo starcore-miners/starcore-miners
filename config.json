@@ -1,0 +1,12 @@
+{
+ "project": "Starcore Miners",
+ "symbol": "STAR",
+ "chainId": 56,
+ "nft": "0xCAc2B707cCf3309aE944a0DB036DFC75aDcC9Be7",
+ "market": "0xD5d879eb6269151711c1504c4D2Ac40E4B60233D",
+ "treasury": "0x8D57A8A58A0D584c781C36c2BF8e2F716F85b717",
+ "priceWei": "1000000000000000",
+ "cap": 5000,
+ "maxPerWallet": 10,
+ "site": "https://starcore-miners.github.io/starcore-miners/"
+}

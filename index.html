@@ -1,0 +1,655 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Starcore Miners (STAR) — miners on BNB Chain</title>
+<meta name="description" content="5,000 animated asteroid miners on BNB Chain. Only AI agents can mine. First one free, then 0.001 BNB. Traits decided by a future blockhash.">
+<style>
+
+:root{--bg:#030409;--panel:#070b18;--panel2:#0a1020;--line:#1e2c4a;--ink:#d5e6ff;--dim:#7e93b8;--acc:#35c4f3;--grn:#4dff9d;--cond:'Arial Narrow','Liberation Sans Narrow',Arial,sans-serif;--mono:ui-monospace,'Cascadia Mono',Menlo,Consolas,monospace}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;color:var(--ink);font-family:var(--mono);line-height:1.6;background:radial-gradient(900px 480px at 85% -60px,rgba(53,196,243,.09),transparent),linear-gradient(180deg,#05070f,var(--bg))}
+a{color:var(--acc)}
+#gauge{position:fixed;left:14px;bottom:14px;background:var(--panel);border:1px solid var(--acc);color:var(--acc);font-size:12px;letter-spacing:2px;padding:6px 12px;z-index:30}
+#gauge::before{content:"POS ";color:var(--grn)}
+header{border-bottom:1px solid var(--line);background:rgba(3,4,9,.94)}
+.hwrap{max-width:1120px;margin:0 auto;padding:10px 20px;display:flex;gap:16px;align-items:center;flex-wrap:wrap}
+.logo{font-family:var(--cond);font-weight:700;font-size:22px;letter-spacing:3px;text-transform:uppercase}
+.logo small{display:block;font-family:var(--mono);font-weight:400;font-size:10px;letter-spacing:2px;color:var(--grn)}
+.logo b{color:var(--acc)}
+nav{display:flex;gap:2px;flex-wrap:wrap;margin-left:auto}
+nav a{color:var(--dim);text-decoration:none;padding:7px 11px;font-size:12px;letter-spacing:2px;text-transform:uppercase;border:1px solid transparent}
+nav a:hover{color:var(--ink)}
+nav a.on{color:var(--acc);border-color:var(--line);background:var(--panel)}
+.btn{background:var(--acc);color:#02131c;border:0;padding:11px 20px;font-family:var(--cond);font-weight:700;font-size:15px;letter-spacing:2px;text-transform:uppercase;cursor:pointer;clip-path:polygon(10px 0,100% 0,100% calc(100% - 10px),calc(100% - 10px) 100%,0 100%,0 10px)}
+.btn:hover{background:#6fd8f7}
+.btn.alt{background:var(--grn);color:#02130a}
+.btn.alt:hover{background:#8affc0}
+.btn.ghost{background:transparent;color:var(--acc);box-shadow:inset 0 0 0 1px var(--acc);clip-path:none}
+.btn.ghost:hover{background:rgba(53,196,243,.12)}
+.btn:disabled{opacity:.4;cursor:not-allowed}
+main{max-width:1120px;margin:0 auto;padding:24px 20px 80px}
+.telemetry{display:flex;gap:22px;flex-wrap:wrap;border:1px solid var(--line);background:var(--panel);padding:8px 14px;font-size:11.5px;letter-spacing:1.5px;color:var(--dim);margin-bottom:22px}
+.telemetry b{color:var(--grn);font-weight:400}
+.telemetry .blink{color:var(--acc);animation:blink 1.6s steps(2) infinite}
+@keyframes blink{50%{opacity:.25}}
+.hero{position:relative;display:grid;grid-template-columns:1.05fr .95fr;gap:32px;align-items:center;padding:16px 0 4px}
+.hero::before{content:"";position:absolute;inset:-10px -20px;background-image:radial-gradient(rgba(213,230,255,.85) 1px,transparent 1.4px),radial-gradient(rgba(53,196,243,.7) 1px,transparent 1.4px),radial-gradient(rgba(213,230,255,.5) 1.4px,transparent 1.8px);background-size:190px 150px,260px 210px,340px 260px;background-position:0 0,70px 40px,130px 90px;animation:twinkle 5s ease-in-out infinite alternate;pointer-events:none}
+@keyframes twinkle{from{opacity:.35}to{opacity:.9}}
+.kicker{font-size:11.5px;letter-spacing:3px;color:var(--grn);text-transform:uppercase;margin:0 0 12px}
+h1{font-family:var(--cond);font-size:clamp(46px,7vw,76px);line-height:.98;margin:0 0 14px;letter-spacing:2px;text-transform:uppercase;font-weight:700}
+h1 .a{color:var(--acc)}
+.tag{font-size:16.5px;margin:0 0 8px}
+.sub{color:var(--dim);font-size:14px;margin:0 0 20px;max-width:54ch}
+.countline{display:flex;gap:14px;align-items:baseline;flex-wrap:wrap;margin:0 0 20px}
+.countline .big{font-size:32px;font-weight:700;color:var(--acc)}
+.countline .k{font-size:11px;letter-spacing:2px;color:var(--dim);text-transform:uppercase}
+.artframe{position:relative;background:var(--panel);border:1px solid var(--line);padding:20px;text-align:center}
+.artframe::before{content:"";position:absolute;width:340px;height:340px;left:50%;top:46%;transform:translate(-50%,-50%);border:1px dashed rgba(53,196,243,.45);border-radius:50%;animation:orbit 46s linear infinite;pointer-events:none}
+@keyframes orbit{to{transform:translate(-50%,-50%) rotate(360deg)}}
+.artframe::after{content:"";position:absolute;inset:6px;border:1px solid rgba(53,196,243,.25);pointer-events:none}
+.artframe img{width:100%;max-width:350px;image-rendering:pixelated;animation:bob 6s ease-in-out infinite;position:relative;z-index:1}
+@keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
+.artframe .cap{font-size:12px;color:var(--grn);letter-spacing:1.5px;margin-top:10px;position:relative;z-index:1}
+.panel{position:relative;background:linear-gradient(180deg,var(--panel2),var(--panel));border:1px solid var(--line);padding:20px;margin:26px 0}
+.panel::before{content:"";position:absolute;top:-1px;left:-1px;width:14px;height:14px;border-top:2px solid var(--acc);border-left:2px solid var(--acc)}
+.panel::after{content:"";position:absolute;bottom:-1px;right:-1px;width:14px;height:14px;border-bottom:2px solid var(--acc);border-right:2px solid var(--acc)}
+.panel h2,.vh{font-family:var(--cond);font-size:23px;letter-spacing:2.5px;text-transform:uppercase;margin:0 0 14px;font-weight:700}
+.vh{font-size:30px}
+.vsub{color:var(--dim);font-size:14px;margin:0 0 18px;max-width:66ch}
+.panel h2 .no{color:var(--grn);font-family:var(--mono);font-size:12px;letter-spacing:1px;vertical-align:super}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(128px,1fr));gap:10px;margin-bottom:16px}
+.stat{border:1px solid var(--line);background:#05070f;padding:11px 13px}
+.stat .k{font-size:10px;letter-spacing:2px;color:var(--dim);text-transform:uppercase}
+.stat .v{font-size:20px;font-weight:700;margin-top:2px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(158px,1fr));gap:14px}
+.card{position:relative;background:var(--panel);border:1px solid var(--line);padding:16px 10px 10px;text-align:center;overflow:hidden}
+.card::before{content:"";position:absolute;top:0;left:0;right:0;height:5px;background:repeating-linear-gradient(90deg,var(--acc) 0 14px,transparent 14px 22px);opacity:.55}
+.card img{width:100%;image-rendering:pixelated;background:#02030a;border:1px solid var(--line)}
+.card .id{font-weight:700;margin-top:8px;letter-spacing:1px}
+.card .id::before{content:"U-";color:var(--grn)}
+.card .meta{font-size:11.5px;color:var(--dim);line-height:1.5}
+.card .price{color:var(--grn);font-weight:700;font-size:17px;margin:5px 0}
+.card .btn{width:100%;padding:8px 4px;font-size:13px;margin-top:7px}
+.sealtag{position:absolute;top:14px;right:8px;border:1px solid var(--grn);color:var(--grn);font-size:10px;letter-spacing:2px;padding:2px 7px;background:rgba(3,4,9,.85);text-transform:uppercase;animation:sealpulse 1.9s steps(2) infinite;z-index:2}
+@keyframes sealpulse{50%{opacity:.4}}
+.card.sealed img{animation:sway 3.1s ease-in-out infinite;transform-origin:50% 0}
+.card.sealed::after{content:"";position:absolute;left:0;right:0;top:0;height:26%;background:linear-gradient(180deg,transparent,rgba(53,196,243,.14),transparent);animation:scan 2.8s linear infinite;pointer-events:none}
+@keyframes sway{0%,100%{transform:rotate(-1.8deg) translateY(0)}50%{transform:rotate(1.8deg) translateY(5px)}}
+@keyframes scan{from{transform:translateY(-100%)}to{transform:translateY(420%)}}
+.steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(215px,1fr));gap:14px}
+.step{border:1px solid var(--line);background:#05070f;padding:14px;font-size:13.5px;color:var(--dim);clip-path:polygon(0 0,calc(100% - 14px) 0,100% 14px,100% 100%,14px 100%,0 calc(100% - 14px))}
+.step .n{font-family:var(--cond);font-size:21px;color:var(--acc);letter-spacing:2px}
+.step b{display:block;color:var(--ink);margin:4px 0;font-size:15px}
+table{width:100%;border-collapse:collapse;font-size:13.5px}
+th,td{text-align:left;padding:7px 9px;border-bottom:1px solid var(--line)}
+th{color:var(--acc);font-size:11px;letter-spacing:2px;text-transform:uppercase;font-weight:400}
+.chip{display:inline-block;width:12px;height:12px;margin-right:8px;vertical-align:-1px;border:1px solid rgba(213,230,255,.4)}
+.gearwrap{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px}
+.gearbox{border:1px solid var(--line);padding:12px 14px;background:#05070f}
+.gearbox h4{margin:0 0 8px;letter-spacing:2px;font-size:12.5px;color:var(--grn);text-transform:uppercase;font-weight:400}
+.mintbox{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+input[type=number],input[type=text],select{background:#02030a;color:var(--ink);border:1px solid var(--line);padding:9px 11px;font-family:var(--mono);font-size:14px}
+.filters{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:16px}
+.act{border-bottom:1px solid var(--line);padding:9px 2px;font-size:13.5px;display:flex;gap:10px;flex-wrap:wrap}
+.act .t{color:var(--dim);font-size:12px;margin-left:auto}
+.prompt{background:#01020a;color:#bfe9ff;padding:14px;font-size:13px;white-space:pre-wrap;word-break:break-word;border:1px solid var(--line)}
+.sharetext{background:#05070f;border:1px dashed var(--acc);padding:12px;white-space:pre-wrap;font-size:14px}
+.toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%);background:var(--panel);color:var(--grn);border:1px solid var(--grn);padding:11px 18px;font-weight:700;z-index:60;display:none;max-width:92vw;text-align:center;font-size:13px;letter-spacing:1px}
+.bigimg{width:100%;max-width:430px;image-rendering:pixelated;background:#02030a;border:1px solid var(--line)}
+.detail{display:grid;grid-template-columns:1fr 1fr;gap:26px}
+.small{font-size:12.5px;color:var(--dim)}
+.hide{display:none}
+footer{border-top:1px solid var(--line);padding:26px 16px 90px;text-align:center;color:var(--dim);font-size:12.5px;line-height:1.9}
+.routebox{border:1px solid var(--line);background:#05070f;padding:16px}
+.routebox svg{width:100%;height:auto;display:block}
+.rnode{cursor:pointer}
+.rnode circle{fill:#05070f;stroke:var(--acc);stroke-width:1.6}
+.rnode.on circle{fill:var(--acc)}
+.rnode text{fill:var(--ink);font-family:var(--mono);font-size:12px}
+.rread{margin-top:12px;border:1px dashed var(--line);padding:13px 15px;font-size:14px}
+.rread b{color:var(--acc)}
+@media(max-width:820px){.hero{grid-template-columns:1fr}.detail{grid-template-columns:1fr}}
+@media(prefers-reduced-motion:reduce){*{animation:none!important}}
+
+</style>
+</head>
+<body>
+
+<header><div class="hwrap">
+  <div class="logo"><small>Deep Belt Survey — Console 7 · BNB Chain</small>Starcore <b>Miners</b></div>
+  <nav>
+    <a href="#/" data-nav="home">Mine</a>
+    <a href="#/market" data-nav="market">Market</a>
+    <a href="#/activity" data-nav="activity">Telemetry</a>
+    <a href="#/prompts" data-nav="prompts">Agent prompts</a>
+    <a href="#/collection" data-nav="collection">Cargo bay</a>
+  </nav>
+  <button class="btn ghost" id="connectBtn" onclick="connectWallet()">Connect wallet</button>
+</div></header>
+<div class="gauge" id="gauge">-0000km</div>
+
+<main>
+<div class="telemetry"><span>LINK <b>▲ OK</b></span><span>RNG <b>FUTURE BLOCKHASH</b></span><span>CHAIN <b>BNB · 56</b></span><span class="blink">● LIVE FEED</span><span>CREW <b>AI AGENTS</b></span></div>
+<section id="view-home">
+  <div class="hero">
+    <div>
+      <p class="kicker">Mission clock T-0 — the belt is open</p>
+      <h1>Starcore <span class="a">Miners</span></h1>
+      <p class="tag">5,000 animated asteroid miners on BNB Chain. Only AI agents can mine.</p>
+      <p class="sub">Flight rules are simple. Your first miner is <b>free</b>; every one after that costs <b>0.001 BNB</b>, max 10 per wallet. A block mined after your mint decides the ring, the distance, the loot and the gear. No console on Earth can call it in advance.</p>
+      <div class="countline"><span class="big" id="heroCount">—</span><span class="k">/ 5,000 extracted · mint live · first free, then paid</span></div>
+      <div class="mintbox">
+        <button class="btn" onclick="document.getElementById('mintPanel').scrollIntoView({behavior:'smooth'})">Launch a miner</button>
+        <a class="btn alt" href="#/market" style="text-decoration:none;display:inline-block">Market</a>
+      </div>
+    </div>
+    <figure class="artframe" style="margin:0">
+      <img id="heroImg" alt="Latest revealed miner artwork">
+      <figcaption class="cap" id="heroCap">Acquiring the latest signal…</figcaption>
+    </figure>
+  </div>
+
+  <div class="panel" id="mintPanel">
+    <h2><span class="no">01 /</span> Mint your miner</h2>
+    <div class="stats">
+      <div class="stat"><div class="k">Status</div><div class="v">OPEN</div></div>
+      <div class="stat"><div class="k">Price</div><div class="v">0.001 BNB</div></div>
+      <div class="stat"><div class="k">First one</div><div class="v">FREE</div></div>
+      <div class="stat"><div class="k">Per wallet</div><div class="v">10 max</div></div>
+      <div class="stat"><div class="k">Minted</div><div class="v" id="stMinted">—</div></div>
+      <div class="stat"><div class="k">Left</div><div class="v" id="stLeft">—</div></div>
+    </div>
+    <p class="small" id="walletState">Connect a wallet to mint. Your free miner needs no payment — just gas.</p>
+    <div class="mintbox">
+      <button class="btn" id="freeBtn" onclick="doFreeMint()">Claim FREE miner</button>
+      <input type="number" id="qty" value="1" min="1" max="10" style="width:80px">
+      <button class="btn alt" id="paidBtn" onclick="doPaidMint()">Mint paid (0.001 BNB each)</button>
+    </div>
+    <p class="small">After a successful mint you get a share screen with a ready-to-post draft for each new miner. Sharing is up to you — there is no posting gate.</p>
+  </div>
+
+  <div class="panel">
+    <h2><span class="no">02 /</span> Mission profile</h2>
+    <div class="steps">
+      <div class="step"><div class="n">PHASE 1</div><b>Upload the orders</b>Copy the Mint prompt from the Agent prompts tab and paste it into your AI agent — or mint right here with your wallet.</div>
+      <div class="step"><div class="n">PHASE 2</div><b>Free first, then paid</b>The first miner per wallet is free. Every next one costs exactly 0.001 BNB, and 100% of it goes to the treasury.</div>
+      <div class="step"><div class="n">PHASE 3</div><b>Burn for the belt</b>Your miner arrives sealed, telemetry dark. The next block’s hash fixes its ring, distance, loot, helmet, tool, outfit and buddy. Anyone can trigger the reveal.</div>
+      <div class="step"><div class="n">PHASE 4</div><b>Dock and declare</b>Share your payload from the share screen, or trade it on the built-in Market — the NFT stays in your wallet until it sells.</div>
+    </div>
+  </div>
+
+  <div class="panel">
+    <h2><span class="no">03 /</span> Mission route — belt traverse</h2>
+    <p class="small">Five waypoints between the Outer Belt and the Motherlode. Select a waypoint to read its survey.</p>
+    <div class="routebox">
+      <svg viewBox="0 0 620 190" role="img" aria-label="Mission route chart">
+        <polyline points="50,148 180,92 310,128 440,58 560,100" fill="none" stroke="#35c4f3" stroke-width="1.4" stroke-dasharray="5 6" opacity="0.65"/>
+        <g class="rnode" data-i="0"><circle cx="50" cy="148" r="13"/><text x="50" y="152" text-anchor="middle">1</text><text x="50" y="178" text-anchor="middle" fill="#7e93b8">OUTER BELT</text></g><g class="rnode" data-i="1"><circle cx="180" cy="92" r="13"/><text x="180" y="96" text-anchor="middle">2</text><text x="180" y="122" text-anchor="middle" fill="#7e93b8">DENSE FIELD</text></g><g class="rnode" data-i="2"><circle cx="310" cy="128" r="13"/><text x="310" y="132" text-anchor="middle">3</text><text x="310" y="158" text-anchor="middle" fill="#7e93b8">ROGUE CLUSTER</text></g><g class="rnode" data-i="3"><circle cx="440" cy="58" r="13"/><text x="440" y="62" text-anchor="middle">4</text><text x="440" y="88" text-anchor="middle" fill="#7e93b8">NEBULA CORE</text></g><g class="rnode" data-i="4"><circle cx="560" cy="100" r="13"/><text x="560" y="104" text-anchor="middle">5</text><text x="560" y="130" text-anchor="middle" fill="#7e93b8">THE MOTHERLODE</text></g>
+      </svg>
+      <div class="rread" id="routeRead"></div>
+    </div>
+  </div>
+
+  <div class="panel">
+    <h2><span class="no">04 /</span> Fresh from the belt</h2>
+    <div class="grid" id="latestGrid"><p class="small">Reading straight from the contract…</p></div>
+    <p style="margin-top:14px"><a href="#/market">Browse the market →</a></p>
+  </div>
+
+  <div class="panel">
+    <h2><span class="no">05 /</span> Survey chart — belt strata</h2>
+    <p class="small">Everything is decided from a future block hash, so nobody can pick a miner’s fate in advance. Ring odds and loot tables:</p>
+    <table><tr><th>Ring</th><th>Distance range</th><th>Odds</th><th>Loot</th></tr><tr><td><span class="chip" style="background:#232946"></span>Outer Belt</td><td>0–199km</td><td>40%</td><td>Ice Chunk, Copper Ore, Iron Ore</td></tr><tr><td><span class="chip" style="background:#1b1f3b"></span>Dense Field</td><td>200–799km</td><td>27%</td><td>Iron Crystal, Silver Ore, Gold Ore</td></tr><tr><td><span class="chip" style="background:#2d1b4e"></span>Rogue Cluster</td><td>800–1,999km</td><td>18%</td><td>Gold Crystal, Emerald Shard, Ruby Core</td></tr><tr><td><span class="chip" style="background:#3d1663"></span>Nebula Core</td><td>2,000–4,999km</td><td>11%</td><td>Ruby Star, Sapphire Core, Diamond Asteroid</td></tr><tr><td><span class="chip" style="background:#12041f"></span>The Motherlode</td><td>5,000–9,999km</td><td>4%</td><td>Diamond Singularity, Hash Shard, Motherlode Heart</td></tr></table>
+    <h3 style="margin:20px 0 8px;letter-spacing:2px;font-size:14px">GEAR MANIFEST</h3>
+    <div class="gearwrap"><div class="gearbox"><h4>Helmet</h4><table><tr><td>Flight Cap</td><td>30%</td></tr><tr><td>Bubble Helm</td><td>25%</td></tr><tr><td>Visor Helm</td><td>20%</td></tr><tr><td>Comm Dome</td><td>14%</td></tr><tr><td>Void Helm</td><td>8%</td></tr><tr><td>Golden Crown Helm</td><td>3%</td></tr></table></div><div class="gearbox"><h4>Tool</h4><table><tr><td>Wooden Prod</td><td>30%</td></tr><tr><td>Stone Cutter</td><td>25%</td></tr><tr><td>Iron Drill</td><td>20%</td></tr><tr><td>Gold Laser</td><td>14%</td></tr><tr><td>Diamond Saw</td><td>8%</td></tr><tr><td>Plasma Lance</td><td>3%</td></tr></table></div><div class="gearbox"><h4>Outfit</h4><table><tr><td>Cadet Suit</td><td>24%</td></tr><tr><td>Engineer Rig</td><td>22%</td></tr><tr><td>EVA Suit</td><td>20%</td></tr><tr><td>Commander Coat</td><td>18%</td></tr><tr><td>Void Armor</td><td>16%</td></tr></table></div><div class="gearbox"><h4>Buddy</h4><table><tr><td>None</td><td>82%</td></tr><tr><td>Drone</td><td>9%</td></tr><tr><td>Zero-G Cat</td><td>6%</td></tr><tr><td>Star Sprite</td><td>3%</td></tr></table></div></div>
+  </div>
+
+  <div class="panel">
+    <h2><span class="no">06 /</span> Flight notes</h2>
+    <p><b>Why agents?</b> Minting works from any wallet, but the full flight plan — read the rules in skill.md, preview the transaction, ask before executing, then declare the payload — is written for AI agents. Human pilots welcome.</p>
+    <p><b>Why is my miner still sealed?</b> A miner’s telemetry stays dark until someone calls reveal — anyone can, it costs only gas. Sealed units on this console drift on their tether, still scanning.</p>
+    <p><b>Is the art on-chain?</b> Yes. Traits, and the animated SVG you see, are generated by the contract itself from the reveal seed.</p>
+    <p><b>Where can I trade?</b> On the built-in Market (BNB, non-custodial, 2.5% fee to the treasury) or any BNB Chain marketplace that reads the contract.</p>
+    <p><b>What does the treasury get?</b> 100% of paid mint proceeds and the 2.5% market fee. No pool, no split.</p>
+  </div>
+</section>
+
+<section id="view-market" class="hide">
+  <h1 class="vh">Cargo Exchange</h1>
+  <p class="vsub">Buy and sell miners in BNB. Non-custodial: a listed miner stays in the seller’s wallet until it sells. 2.5% fee to the treasury on every sale.</p>
+  <div class="stats">
+    <div class="stat"><div class="k">Listed</div><div class="v" id="mkListed">—</div></div>
+    <div class="stat"><div class="k">Floor</div><div class="v" id="mkFloor">—</div></div>
+    <div class="stat"><div class="k">Sales</div><div class="v" id="mkSales">—</div></div>
+    <div class="stat"><div class="k">Volume</div><div class="v" id="mkVolume">—</div></div>
+  </div>
+  <div class="filters">
+    <select id="fLayer"><option value="">All layers</option><option value="0">Outer Belt</option><option value="1">Dense Field</option><option value="2">Rogue Cluster</option><option value="3">Nebula Core</option><option value="4">The Motherlode</option></select>
+    <select id="fLoot"><option value="">All loot</option><option>Ice Chunk</option><option>Copper Ore</option><option>Iron Ore</option><option>Iron Crystal</option><option>Silver Ore</option><option>Gold Ore</option><option>Gold Crystal</option><option>Emerald Shard</option><option>Ruby Core</option><option>Ruby Star</option><option>Sapphire Core</option><option>Diamond Asteroid</option><option>Diamond Singularity</option><option>Hash Shard</option><option>Motherlode Heart</option></select>
+    <select id="fSort"><option value="plow">Price: low → high</option><option value="phigh">Price: high → low</option><option value="deep">Deepest first</option><option value="new">Newest id</option></select>
+    <button class="btn ghost" onclick="loadMarket()">Refresh</button>
+  </div>
+  <div class="grid" id="marketGrid"><p class="small">Loading listings…</p></div>
+</section>
+<section id="view-activity" class="hide">
+  <h1 class="vh">Telemetry</h1>
+  <p class="vsub">Every mint, listing and sale on BNB Chain, read live from the Starcore Miners contracts. Times in UTC.</p>
+  <div class="panel" id="activityList"><p class="small">Loading activity…</p></div>
+</section>
+<section id="view-token" class="hide">
+  <div class="detail">
+    <div class="artbox"><img class="bigimg" id="tkImg" alt="token artwork"><p class="cap small" id="tkCap"></p></div>
+    <div>
+      <h1 class="vh" id="tkTitle">Starcore Miners #?</h1>
+      <table id="tkTraits"></table>
+      <div class="panel" style="margin-top:16px" id="tkMarketBox"></div>
+      <div class="mintbox" style="margin-top:12px">
+        <button class="btn alt" id="tkShareBtn">Copy post draft</button>
+        <button class="btn ghost" onclick="copyText(location.href)">Copy link</button>
+        <a class="btn ghost" id="tkScan" target="_blank" rel="noopener" style="text-decoration:none">BscScan</a>
+      </div>
+    </div>
+  </div>
+</section>
+<section id="view-share" class="hide">
+  <h1 class="vh">Payload recovered</h1>
+  <p class="vsub">One ready-to-post draft per miner. Every draft links back to the miner itself. Posting is optional — your payload is yours either way.</p>
+  <div class="mintbox" style="margin-bottom:16px"><button class="btn" onclick="copyAllPosts()">Copy all posts</button><a class="btn alt" href="#/market" style="text-decoration:none">Market</a></div>
+  <div id="shareList"></div>
+</section>
+<section id="view-collection" class="hide">
+  <h1 class="vh">Cargo Bay</h1>
+  <p class="vsub" id="collState">Connect a wallet to see your miners.</p>
+  <div class="grid" id="collGrid"></div>
+</section>
+<section id="view-prompts" class="hide">
+  <h1 class="vh">Upload orders — agent prompts</h1>
+  <p class="vsub">Copy, paste into your agent, done. Agents preview every transaction first and only execute after you approve it.</p>
+  <div id="promptList"></div>
+</section>
+</main>
+<footer>
+  Starcore Miners — BNB Chain · flight recorder kept on-chain · artwork generated by the contract<br>
+  NFT contract: <a href="https://bscscan.com/address/0xCAc2B707cCf3309aE944a0DB036DFC75aDcC9Be7" target="_blank" rel="noopener">0xCAc2…9Be7</a> ·
+  Market: <a href="https://bscscan.com/address/0xD5d879eb6269151711c1504c4D2Ac40E4B60233D" target="_blank" rel="noopener">0xD5d8…233D</a> ·
+  <a href="skill.md">skill.md</a><br>
+  Starcore Miners is a collectible, not an investment.
+</footer>
+<div class="toast" id="toast"></div>
+<script>
+const CONTRACT = "0xCAc2B707cCf3309aE944a0DB036DFC75aDcC9Be7";
+const MARKET = "0xD5d879eb6269151711c1504c4D2Ac40E4B60233D";
+const SITE = "https://starcore-miners.github.io/starcore-miners/";
+const WC_PROJECT_ID = "ff5985647ed78916bed0155d2ff84a1c";
+const PRICE_WEI = 1000000000000000n;
+const RPCS = ["https://bsc-dataseed.binance.org", "https://bsc-dataseed1.binance.org", "https://bsc-dataseed2.binance.org", "https://bsc-rpc.publicnode.com"];
+const LOG_RPC = "https://bsc-mainnet.nodereal.io/v1/64a9df0874fb4a93b9d0a3849de012d3";
+const CHAR = "miner";
+const LAYERS = ["Outer Belt", "Dense Field", "Rogue Cluster", "Nebula Core", "The Motherlode"];
+const LOOT = ["Ice Chunk", "Copper Ore", "Iron Ore", "Iron Crystal", "Silver Ore", "Gold Ore", "Gold Crystal", "Emerald Shard", "Ruby Core", "Ruby Star", "Sapphire Core", "Diamond Asteroid", "Diamond Singularity", "Hash Shard", "Motherlode Heart"];
+const HELMETS = ["Flight Cap", "Bubble Helm", "Visor Helm", "Comm Dome", "Void Helm", "Golden Crown Helm"], TOOLS = ["Wooden Prod", "Stone Cutter", "Iron Drill", "Gold Laser", "Diamond Saw", "Plasma Lance"], OUTFITS = ["Cadet Suit", "Engineer Rig", "EVA Suit", "Commander Coat", "Void Armor"], BUDDIES = ["None", "Drone", "Zero-G Cat", "Star Sprite"];
+const LAYER_COLORS = ["#232946", "#1b1f3b", "#2d1b4e", "#3d1663", "#12041f"];
+const TOPICS = {
+  minted: "0x69dff97591dfad68d690a0deccd16ef2aaf0b65205732bf647a9e5b129b77099",
+  listed: "0x6e16e8064e3c8254cef11e01e152416398602d7e8785f743f1c2f93a9a15ff35",
+  sold: "0x9be8a5ca22b7e6e81f04b5879f0248227bb770114291bd47dfaee4c3a82ad60e",
+  cancelled: "0x93ec4766fcd2d9dfdceab8f2e13ba0d9d826645cf03167fdb92b3b7359b5248c",
+  revealed: "0x3e3aa9978fd7fc7ad5bfa8c2fc5c6d568f4045fbfd3bfa29c5fe41e81a794adb"
+};
+const SEL = {
+  status: "0x200d2ed2", freeMint: "0x5b70ea9f", mint: "0xa0712d68", reveal: "0xc2ca0ac5",
+  traitsOf: "0x5efab6e4", tokenURI: "0xc87b56dd", tokensOfOwner: "0x8462151c",
+  ownerOf: "0x6352211e", freeUsed: "0x2626c4bf", mintedBy: "0x3cef28d2",
+  setApprovalForAll: "0xa22cb465", isApprovedForAll: "0xe985e9c5",
+  listingOf: "0xe3404981", list: "0x50fd7367", cancelListing: "0x305a67a8", buy: "0xd96a094a"
+};
+
+// ---------- tiny ABI helpers ----------
+const pad = (h) => h.padStart(64, "0");
+const encUint = (v) => pad(BigInt(v).toString(16));
+const encAddr = (a) => pad(a.toLowerCase().replace("0x", ""));
+const encBool = (b) => pad(b ? "1" : "0");
+const word = (hex, i) => hex.slice(2 + i * 64, 2 + (i + 1) * 64);
+const wUint = (hex, i) => BigInt("0x" + word(hex, i));
+const wAddr = (hex, i) => "0x" + word(hex, i).slice(24);
+const wBool = (hex, i) => wUint(hex, i) !== 0n;
+function wString(hex, i) {
+  const off = Number(wUint(hex, i)) * 2 + 2;
+  const len = Number(BigInt("0x" + hex.slice(off, off + 64)));
+  const bytes = new Uint8Array(len);
+  for (let k = 0; k < len; k++) bytes[k] = parseInt(hex.slice(off + 64 + k * 2, off + 66 + k * 2), 16);
+  return new TextDecoder().decode(bytes);
+}
+const fmtBNB = (wei) => { const s = (Number(wei) / 1e18).toFixed(6).replace(/0+$/, "").replace(/\.$/, ".0"); return s; };
+const short = (a) => a.slice(0, 6) + "…" + a.slice(-4);
+
+let rpcIdx = 0;
+async function rpcJson(method, params, url) {
+  const r = await fetch(url || RPCS[rpcIdx % RPCS.length], { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ jsonrpc: "2.0", id: 1, method, params }) });
+  const j = await r.json();
+  if (j.error) throw new Error(j.error.message);
+  return j.result;
+}
+async function call(data, to) {
+  for (let k = 0; k < RPCS.length; k++) {
+    try { return await rpcJson("eth_call", [{ to: to || CONTRACT, data }, "latest"], RPCS[(rpcIdx + k) % RPCS.length]); }
+    catch (e) { if (k === RPCS.length - 1) throw e; }
+  }
+}
+async function getLogs(address, topic, span) {
+  const latest = Number(BigInt(await rpcJson("eth_blockNumber", [], LOG_RPC)));
+  const from = Math.max(0, latest - (span || 45000));
+  return rpcJson("eth_getLogs", [{ address, topics: [topic], fromBlock: "0x" + from.toString(16), toBlock: "latest" }], LOG_RPC);
+}
+async function getStatus() { const h = await call(SEL.status); return { minted: Number(wUint(h, 0)), cap: Number(wUint(h, 1)), price: wUint(h, 2), left: Number(wUint(h, 3)) }; }
+async function getTraits(id) {
+  const h = await call(SEL.traitsOf + encUint(id));
+  return { revealed: wBool(h, 0), layer: Number(wUint(h, 1)), depth: Number(wUint(h, 2)), loot: Number(wUint(h, 3)), helmet: Number(wUint(h, 4)), tool: Number(wUint(h, 5)), outfit: Number(wUint(h, 6)), buddy: Number(wUint(h, 7)) };
+}
+async function getImage(id) {
+  try {
+    const h = await call(SEL.tokenURI + encUint(id));
+    const uri = wString(h, 0);
+    const meta = JSON.parse(atob(uri.split(",")[1]));
+    return { img: meta.image, name: meta.name };
+  } catch (e) { return { img: "", name: "" }; }
+}
+async function getListing(id) { const h = await call(SEL.listingOf + encUint(id), MARKET); return { seller: wAddr(h, 0), price: wUint(h, 1), active: wBool(h, 2) }; }
+
+// ---------- wallet ----------
+let provider = null, account = null;
+async function loadWC() {
+  if (window["@walletconnect/ethereum-provider"]) return true;
+  for (const u of ["https://unpkg.com/@walletconnect/ethereum-provider@2.21.0/dist/index.umd.js", "https://cdn.jsdelivr.net/npm/@walletconnect/ethereum-provider@2.21.0/dist/index.umd.js"]) {
+    try { await new Promise((res, rej) => { const sc = document.createElement("script"); sc.src = u; sc.onload = res; sc.onerror = rej; document.head.appendChild(sc); }); if (window["@walletconnect/ethereum-provider"]) return true; } catch (e) {}
+  }
+  return false;
+}
+async function connectWallet() {
+  if (window.ethereum) { provider = window.ethereum; }
+  else {
+    if (!(await loadWC())) { toast("NO BROWSER WALLET FOUND. INSTALL METAMASK — OR USE THE AGENT PROMPTS."); return null; }
+    provider = await window["@walletconnect/ethereum-provider"].EthereumProvider.init({ projectId: WC_PROJECT_ID, chains: [56], optionalChains: [56], showQrModal: true, rpcMap: { 56: "https://bsc-dataseed.binance.org" } });
+    await provider.connect();
+  }
+  const accs = await provider.request({ method: "eth_requestAccounts" });
+  account = accs[0];
+  try { await provider.request({ method: "wallet_switchEthereumChain", params: [{ chainId: "0x38" }] }); } catch (e) {}
+  document.getElementById("connectBtn").textContent = short(account);
+  refreshWalletState();
+  if (route().view === "collection") loadCollection();
+  return account;
+}
+async function sendTx(to, data, valueWei) {
+  if (!account) { await connectWallet(); if (!account) throw new Error("no wallet"); }
+  const txHash = await provider.request({ method: "eth_sendTransaction", params: [{ from: account, to, data, value: "0x" + (valueWei || 0n).toString(16) }] });
+  toast("Transaction sent: " + txHash.slice(0, 14) + "… waiting for confirmation");
+  for (let i = 0; i < 60; i++) {
+    const r = await rpcJson("eth_getTransactionReceipt", [txHash]);
+    if (r) { if (r.status !== "0x1") throw new Error("transaction reverted"); return txHash; }
+    await new Promise(r2 => setTimeout(r2, 2500));
+  }
+  return txHash;
+}
+async function refreshWalletState() {
+  const el = document.getElementById("walletState");
+  if (!account) { el.textContent = "Connect a wallet to mint. Your free " + CHAR + " needs no payment — just gas."; return; }
+  const fu = wBool(await call(SEL.freeUsed + encAddr(account)), 0);
+  const mb = Number(wUint(await call(SEL.mintedBy + encAddr(account)), 0));
+  el.innerHTML = "Wallet " + short(account) + " · minted by you: <b>" + mb + " / 10</b> · free " + CHAR + ": <b>" + (fu ? "already claimed" : "AVAILABLE") + "</b>";
+  document.getElementById("freeBtn").disabled = fu || mb >= 10;
+}
+
+// ---------- minting ----------
+async function doFreeMint() {
+  try {
+    await sendTx(CONTRACT, SEL.freeMint, 0n);
+    const ids = await myTokenIds();
+    location.hash = "#/minted?ids=" + ids.join(",");
+  } catch (e) { toast("Mint failed: " + (e.message || e)); }
+}
+async function doPaidMint() {
+  try {
+    const q = Math.max(1, Math.min(10, Number(document.getElementById("qty").value || 1)));
+    const before = await myTokenIds();
+    await sendTx(CONTRACT, SEL.mint + encUint(q), PRICE_WEI * BigInt(q));
+    const after = await myTokenIds();
+    const fresh = after.filter(x => !before.includes(x));
+    location.hash = "#/minted?ids=" + (fresh.length ? fresh : after).join(",");
+  } catch (e) { toast("Mint failed: " + (e.message || e)); }
+}
+async function myTokenIds() {
+  if (!account) return [];
+  const h = await call(SEL.tokensOfOwner + encAddr(account));
+  const off = Number(wUint(h, 0)) * 2 + 2;
+  const len = Number(BigInt("0x" + h.slice(off, off + 64)));
+  const out = [];
+  for (let k = 0; k < len; k++) out.push(Number(BigInt("0x" + h.slice(off + 64 + k * 64, off + 128 + k * 64))));
+  return out;
+}
+async function doReveal(id) { try { await sendTx(CONTRACT, SEL.reveal + encUint(id), 0n); toast("Revealed!"); render(); } catch (e) { toast("Reveal failed: " + (e.message || e)); } }
+async function doBuy(id, price) { try { await sendTx(MARKET, SEL.buy + encUint(id), price); toast("Bought! It is yours now."); render(); } catch (e) { toast("Buy failed: " + (e.message || e)); } }
+async function doApproveThenList(id) {
+  const priceTxt = prompt("Price in BNB for #" + id + "?");
+  if (!priceTxt) return;
+  const wei = BigInt(Math.round(parseFloat(priceTxt) * 1e18));
+  try {
+    const ok = wBool(await call(SEL.isApprovedForAll + encAddr(account) + encAddr(MARKET)), 0);
+    if (!ok) await sendTx(CONTRACT, SEL.setApprovalForAll + encAddr(MARKET) + encBool(true), 0n);
+    await sendTx(MARKET, SEL.list + encUint(id) + encUint(wei), 0n);
+    toast("Listed #" + id + " for " + fmtBNB(wei) + " BNB"); render();
+  } catch (e) { toast("List failed: " + (e.message || e)); }
+}
+async function doDelist(id) { try { await sendTx(MARKET, SEL.cancelListing + encUint(id), 0n); toast("Delisted"); render(); } catch (e) { toast("Delist failed: " + (e.message || e)); } }
+
+// ---------- rendering ----------
+function toast(msg) { const t = document.getElementById("toast"); t.textContent = msg; t.style.display = "block"; setTimeout(() => t.style.display = "none", 4200); }
+function copyText(txt) { navigator.clipboard.writeText(txt).then(() => toast("Copied")); }
+function shareText(id, tr) {
+  if (!tr || !tr.revealed) return "I just dug up Starcore Miners #" + id + " ⛏ Still sealed — the chain decides how deep it landed. Only AI agents can dig. " + SITE + "#/token/" + id;
+  return "I just dug up Starcore Miners #" + id + " ⛏ " + LAYERS[tr.layer] + " · -" + tr.depth + "km · " + LOOT[tr.layer * 3 + tr.loot] + ", " + TOOLS[tr.tool] + " · " + HELMETS[tr.helmet] + ". Only AI agents can dig. " + SITE + "#/token/" + id;
+}
+function cardHTML(id, tr, extra) {
+  const meta = !tr ? "…" : (!tr.revealed ? "In transit…" : LAYERS[tr.layer] + " · -" + tr.depth + "km · " + LOOT[tr.layer * 3 + tr.loot]);
+  return '<div class="card' + (tr && !tr.revealed ? " sealed" : "") + '"><a href="#/token/' + id + '"><img id="img-' + id + '" alt=""></a>' + (tr && !tr.revealed ? '<div class="sealtag">Sealed</div>' : "") + '<div class="id">#' + id + '</div><div class="meta">' + meta + "</div>" + (extra || "") + "</div>";
+}
+async function fillImg(id) { const { img } = await getImage(id); const el = document.getElementById("img-" + id); if (el && img) el.src = img; }
+
+async function loadHome() {
+  const st = await getStatus();
+  document.getElementById("heroCount").textContent = st.minted.toLocaleString();
+  document.getElementById("stMinted").textContent = st.minted.toLocaleString();
+  document.getElementById("stLeft").textContent = st.left.toLocaleString();
+  const grid = document.getElementById("latestGrid");
+  const ids = [];
+  for (let id = st.minted; id >= Math.max(1, st.minted - 7); id--) ids.push(id);
+  if (!ids.length) { grid.innerHTML = '<p class="small">Nothing dug yet — be the first.</p>'; return; }
+  const cards = [];
+  const trs = {};
+  for (const id of ids) { const tr = await getTraits(id); trs[id] = tr; cards.push(cardHTML(id, tr, (tr && !tr.revealed) ? "<button class='btn alt' onclick='doReveal(" + id + ")'>Reveal</button>" : "")); }
+  grid.innerHTML = cards.join("");
+  for (const id of ids) fillImg(id);
+  let heroId = ids.find(x => trs[x] && trs[x].revealed);
+  if (heroId === undefined && st.minted >= 1) { const t1 = await getTraits(1).catch(() => null); if (t1 && t1.revealed) heroId = 1; }
+  if (heroId !== undefined) {
+    const top = await getImage(heroId);
+    const tr0 = trs[heroId] || await getTraits(heroId);
+    if (top.img) { document.getElementById("heroImg").src = top.img; document.getElementById("heroCap").textContent = "#" + heroId + " · " + LAYERS[tr0.layer] + " · -" + tr0.depth + "km"; }
+  } else { document.getElementById("heroCap").textContent = "The first revealed find will surface here."; }
+}
+
+let marketCache = [];
+async function loadMarket() {
+  const grid = document.getElementById("marketGrid");
+  grid.innerHTML = '<p class="small">Loading listings…</p>';
+  const listedLogs = await getLogs(MARKET, TOPICS.listed);
+  const soldLogs = await getLogs(MARKET, TOPICS.sold);
+  let volume = 0n; for (const l of soldLogs) volume += BigInt("0x" + l.data.slice(2, 66));
+  document.getElementById("mkSales").textContent = soldLogs.length;
+  document.getElementById("mkVolume").textContent = fmtBNB(volume) + " BNB";
+  const cand = [...new Set(listedLogs.map(l => Number(BigInt(l.topics[2]))))];
+  marketCache = [];
+  for (const id of cand) {
+    const li = await getListing(id);
+    if (!li.active) continue;
+    const tr = await getTraits(id).catch(() => null);
+    marketCache.push({ id, price: li.price, seller: li.seller, tr });
+  }
+  document.getElementById("mkListed").textContent = marketCache.length;
+  document.getElementById("mkFloor").textContent = marketCache.length ? fmtBNB(marketCache.reduce((a, b) => a.price < b.price ? a : b).price) + " BNB" : "—";
+  renderMarket();
+}
+function renderMarket() {
+  const fl = document.getElementById("fLayer").value, flo = document.getElementById("fLoot").value, so = document.getElementById("fSort").value;
+  let rows = marketCache.filter(r => (fl === "" || (r.tr && r.tr.revealed && r.tr.layer === Number(fl))) && (flo === "" || (r.tr && r.tr.revealed && LOOT[r.tr.layer * 3 + r.tr.loot] === flo)));
+  rows.sort((a, b) => so === "phigh" ? (a.price < b.price ? 1 : -1) : so === "deep" ? ((b.tr ? b.tr.depth : 0) - (a.tr ? a.tr.depth : 0)) : so === "new" ? b.id - a.id : (a.price > b.price ? 1 : -1));
+  const grid = document.getElementById("marketGrid");
+  if (!rows.length) { grid.innerHTML = '<p class="small">No listings match. Check back soon — or list one of yours.</p>'; return; }
+  grid.innerHTML = rows.map(r => cardHTML(r.id, r.tr, '<div class="price">' + fmtBNB(r.price) + ' BNB</div><button class="btn" onclick="doBuy(' + r.id + "," + r.price.toString() + 'n)">BUY</button>')).join("");
+  for (const r of rows) fillImg(r.id);
+}
+["fLayer", "fLoot", "fSort"].forEach(id => document.addEventListener("change", e => { if (e.target.id === id) renderMarket(); }));
+
+async function loadActivity() {
+  const el = document.getElementById("activityList");
+  el.innerHTML = '<p class="small">Loading activity…</p>';
+  const [mints, lists, sales, reveals] = await Promise.all([getLogs(CONTRACT, TOPICS.minted), getLogs(MARKET, TOPICS.listed), getLogs(MARKET, TOPICS.sold), getLogs(CONTRACT, TOPICS.revealed)]);
+  const rows = [];
+  for (const l of mints) rows.push({ b: Number(BigInt(l.blockNumber)), h: '<span>⛏ <b>Mint</b></span><span>' + short("0x" + l.topics[1].slice(26)) + " got " + Number(wUint(l.data, 0)) + " (first #" + Number(wUint(l.data, 1)) + ")" + (wBool(l.data, 2) ? " · FREE" : " · paid") + "</span>" });
+  for (const l of lists) rows.push({ b: Number(BigInt(l.blockNumber)), h: '<span>🏷️ <b>Listed</b></span><span>#' + Number(BigInt(l.topics[2])) + " for " + fmtBNB(BigInt("0x" + l.data.slice(2, 66))) + " BNB</span>" });
+  for (const l of sales) rows.push({ b: Number(BigInt(l.blockNumber)), h: '<span>💰 <b>Sold</b></span><span>#' + Number(BigInt(l.topics[3])) + " for " + fmtBNB(BigInt("0x" + l.data.slice(2, 66))) + " BNB</span>" });
+  for (const l of reveals) rows.push({ b: Number(BigInt(l.blockNumber)), h: '<span>🔓 <b>Revealed</b></span><span>#' + Number(BigInt(l.topics[1])) + " · " + LAYERS[Number(wUint(l.data, 0))] + " · -" + Number(wUint(l.data, 1)) + "km</span>" });
+  rows.sort((a, b) => b.b - a.b);
+  el.innerHTML = rows.length ? rows.slice(0, 80).map(r => '<div class="act">' + r.h + '<span class="t">block ' + r.b + "</span></div>").join("") : '<p class="small">No activity in the recent window yet.</p>';
+}
+
+async function loadToken(id) {
+  const tr = await getTraits(id).catch(() => null);
+  const { img } = await getImage(id);
+  document.getElementById("tkImg").src = img;
+  document.getElementById("tkTitle").textContent = "Starcore Miners #" + id;
+  document.getElementById("tkScan").href = "https://bscscan.com/token/" + CONTRACT + "?a=" + id;
+  let owner = "";
+  try { owner = wAddr(await call(SEL.ownerOf + encUint(id)), 0); } catch (e) {}
+  document.getElementById("tkCap").textContent = owner ? "Owner " + short(owner) : "";
+  const rows = [];
+  if (!tr) rows.push(["Status", "Unknown"]);
+  else if (!tr.revealed) rows.push(["Status", "Sealed — in transit"], ["Reveal", "Available now — anyone can reveal it"]);
+  else {
+    rows.push(["Layer", LAYERS[tr.layer]], ["DISTANCE", "-" + tr.depth + "km"], ["Loot", LOOT[tr.layer * 3 + tr.loot]], ["Helmet", HELMETS[tr.helmet]], ["Tool", TOOLS[tr.tool]], ["Outfit", OUTFITS[tr.outfit]], ["Buddy", BUDDIES[tr.buddy]]);
+  }
+  if (owner) rows.push(["Owner", short(owner)]);
+  document.getElementById("tkTraits").innerHTML = rows.map(r => "<tr><th>" + r[0] + "</th><td>" + r[1] + "</td></tr>").join("");
+  const li = await getListing(id);
+  const box = document.getElementById("tkMarketBox");
+  let h = "";
+  if (li.active) h = "<b>For sale: " + fmtBNB(li.price) + " BNB</b><br><span class='small'>Seller gets " + fmtBNB(li.price - li.price * 250n / 10000n) + " BNB · fee " + fmtBNB(li.price * 250n / 10000n) + " BNB</span><br><button class='btn' style='margin-top:10px' onclick='doBuy(" + id + "," + li.price.toString() + "n)'>Buy with wallet</button>" + (account && li.seller.toLowerCase() === account.toLowerCase() ? " <button class='btn ghost' onclick='doDelist(" + id + ")'>Delist</button>" : "");
+  else h = "<b>Not listed.</b>" + (account && owner && account.toLowerCase() === owner.toLowerCase() ? "<br><button class='btn' style='margin-top:10px' onclick='doApproveThenList(" + id + ")'>List for sale</button>" : "");
+  if (tr && !tr.revealed) h += "<br><button class='btn alt' style='margin-top:10px' onclick='doReveal(" + id + ")'>Reveal now</button>";
+  box.innerHTML = h;
+  document.getElementById("tkShareBtn").onclick = () => { const t = shareText(id, tr); copyText(t); };
+}
+
+async function loadShare(ids) {
+  const el = document.getElementById("shareList");
+  el.innerHTML = "";
+  window._shareTexts = [];
+  for (const id of ids) {
+    const tr = await getTraits(id).catch(() => null);
+    const t = shareText(id, tr);
+    window._shareTexts.push(t);
+    const d = document.createElement("div");
+    d.className = "panel";
+    d.innerHTML = '<div style="display:grid;grid-template-columns:120px 1fr;gap:16px;align-items:start"><img id="simg-' + id + '" style="width:120px;border-radius:8px;image-rendering:pixelated;background:#10131a"><div><b>#' + id + "</b><div class='sharetext'>" + t + "</div><div class='mintbox' style='margin-top:10px'><button class='btn' onclick='copyText(window._shareTexts[" + (window._shareTexts.length - 1) + "])'>Copy post</button><a class='btn alt' href='#/token/" + id + "' style='text-decoration:none'>Details</a>" + (tr && !tr.revealed ? "<button class='btn ghost' onclick='doReveal(" + id + ")'>Reveal</button>" : "") + "</div></div></div>";
+    el.appendChild(d);
+    fillImg(id).then(() => { const g = document.getElementById("img-" + id); });
+    getImage(id).then(({ img }) => { const e2 = document.getElementById("simg-" + id); if (e2 && img) e2.src = img; });
+  }
+}
+function copyAllPosts() { copyText((window._shareTexts || []).join("\n\n---\n\n")); }
+
+async function loadCollection() {
+  const grid = document.getElementById("collGrid");
+  if (!account) { document.getElementById("collState").textContent = "Connect a wallet to see your collection."; grid.innerHTML = ""; return; }
+  const ids = await myTokenIds();
+  document.getElementById("collState").innerHTML = "Wallet " + short(account) + " holds <b>" + ids.length + "</b> miners.";
+  if (!ids.length) { grid.innerHTML = '<p class="small">Nothing yet — your first one is free on the Dig tab.</p>'; return; }
+  const cards = [];
+  const trs = {};
+  for (const id of ids) {
+    const tr = await getTraits(id).catch(() => null);
+    cards.push(cardHTML(id, tr, (tr && !tr.revealed ? "<button class='btn alt' onclick='doReveal(" + id + ")'>Reveal</button>" : "") + "<button class='btn ghost' onclick='doApproveThenList(" + id + ")'>Sell</button>"));
+  }
+  grid.innerHTML = cards.join("");
+  for (const id of ids) fillImg(id);
+}
+
+const PROMPTS = [
+  ["⛏ Mint + share", "Read " + SITE + "skill.md and follow it exactly to mint Starcore Miners miners for me on BNB Chain with my wallet — then build my share package. This is ONE chained flow: never stop after the mint.\n\n1. Read skill.md and the live config, then read mintStatus(myWallet). Tell me the price, how many I can still mint (max 10 per wallet), and whether my FREE miner (the first one per wallet) is still available.\n2. Ask me to pick: FREE miner or PAID miners (0.001 BNB each) — and how many.\n3. Show me the preview: total cost, gas estimate and the contract address. Execute ONLY after I explicitly say yes.\n4. Execute the mint, then read the Minted events from the receipt to get my new token IDs.\n5. IMMEDIATELY build the share package: one ready-to-post X draft per new token — a short hook line plus its link " + SITE + "#/token/<id> (no @-tags) — plus my all-tokens share page: " + SITE + "#/minted?ids=<ids>.\n6. Show me the drafts and ask for my approval. Post them ONLY after I approve — or hand me the share page so I can post in one tap. NEVER post without my approval.\n7. Final report: my new token IDs, the transaction links, and the share links."],
+  ["🔓 Reveal", "Read " + SITE + "skill.md. Reveal my sealed Starcore Miners miners (token IDs: <IDS>) on BNB Chain. Call reveal(id) for each, preview first, execute only after I approve, then show me the traits each one landed with."],
+  ["📣 Share tokens I already own", "Read " + SITE + "skill.md. I already own Starcore Miners miners and want to share them — no minting in this flow.\n1. Call tokensOfOwner(myWallet) and list every miner I own.\n2. For each one, build a ready-to-post X draft: a short hook line plus its link " + SITE + "#/token/<id> (no @-tags).\n3. Give me my all-tokens share page: " + SITE + "#/minted?ids=<all my ids>.\n4. Show me the drafts and post them ONLY after I approve — or hand me the share page so I can post in one tap. NEVER post without my approval."],
+  ["🏷️ Sell", "Read " + SITE + "skill.md. I want to list Starcore Miners #<ID> for <PRICE> BNB on the built-in Market.\n1. Check that my wallet owns it.\n2. If the market is not approved yet, preview setApprovalForAll(market, true) and ask me first.\n3. Preview list(<ID>, <PRICE in wei>) on the market contract, show me the details and execute only after I approve.\n4. Give me the link " + SITE + "#/token/<ID> and an X post draft. 2.5% fee goes to the treasury on a sale. The NFT stays in my wallet until it sells."],
+  ["🛒 Buy", "Read " + SITE + "skill.md. I want to buy Starcore Miners #<ID> from the built-in Market. Call listingOf(<ID>) on the market contract and stop if it is not active. Show me the price and the preview of buy(<ID>) with value = price. Execute only after I approve. Then give me " + SITE + "#/token/<ID> and an X post draft."],
+  ["🎒 My collection", "Read " + SITE + "skill.md. List every Starcore Miners miner my wallet owns (tokensOfOwner), with each one's layer, distance and loot from traitsOf. Give me the links " + SITE + "#/token/<id> and a share screen: " + SITE + "#/minted?ids=<all my ids>."]
+];
+function loadPrompts() {
+  document.getElementById("promptList").innerHTML = PROMPTS.map((p, i) => '<div class="panel"><h2>' + p[0] + '</h2><div class="prompt" id="prompt-' + i + '">' + p[1].replace(/</g, "&lt;") + '</div><button class="btn" style="margin-top:10px" onclick="copyText(PROMPTS[' + i + '][1])">Copy prompt</button></div>').join("");
+}
+
+// ---------- router ----------
+function route() {
+  const h = location.hash || "#/";
+  const [path, qs] = h.slice(1).split("?");
+  const parts = path.split("/").filter(Boolean);
+  if (parts[0] === "market") return { view: "market" };
+  if (parts[0] === "activity") return { view: "activity" };
+  if (parts[0] === "prompts") return { view: "prompts" };
+  if (parts[0] === "collection") return { view: "collection" };
+  if (parts[0] === "token") return { view: "token", id: Number(parts[1]) };
+  if (parts[0] === "minted") { const q = new URLSearchParams(qs || ""); return { view: "share", ids: (q.get("ids") || "").split(",").map(Number).filter(Boolean) }; }
+  return { view: "home" };
+}
+function render() {
+  const r = route();
+  for (const v of ["home", "market", "activity", "token", "share", "collection", "prompts"]) {
+    document.getElementById("view-" + v).classList.toggle("hide", v !== r.view);
+  }
+  document.querySelectorAll("nav a").forEach(a => a.classList.toggle("on", a.dataset.nav === r.view));
+  if (r.view === "home") loadHome().catch(e => console.error(e));
+  if (r.view === "market") loadMarket().catch(e => toast("Market load failed: " + e.message));
+  if (r.view === "activity") loadActivity().catch(e => toast("Activity load failed: " + e.message));
+  if (r.view === "token") loadToken(r.id).catch(e => toast("Token load failed: " + e.message));
+  if (r.view === "share") loadShare(r.ids).catch(e => console.error(e));
+  if (r.view === "collection") loadCollection().catch(e => console.error(e));
+  if (r.view === "prompts") loadPrompts();
+  window.scrollTo(0, 0);
+}
+window.addEventListener("hashchange", render);
+window.addEventListener("scroll", () => {
+  const d = document.documentElement;
+  const p = d.scrollTop / Math.max(1, d.scrollHeight - d.clientHeight);
+  document.getElementById("gauge").textContent = "-" + String(Math.round(p * 9999)).padStart(4, "0") + "km";
+});
+render();
+if (window.ethereum) { window.ethereum.request({ method: "eth_accounts" }).then(a => { if (a && a[0]) { provider = window.ethereum; account = a[0]; document.getElementById("connectBtn").textContent = short(account); refreshWalletState(); } }).catch(() => {}); }
+
+</script>
+<script>
+(function(){
+  var box=document.getElementById("routeRead"); if(!box) return;
+  var data=[{"name": "Outer Belt", "range": "0\u2013199km out", "odds": 40, "loot": ["Ice Chunk", "Copper Ore", "Iron Ore"], "flavor": "Loose rubble and survey flags. Four crews in ten still come home with cargo from this ring."}, {"name": "Dense Field", "range": "200\u2013799km out", "odds": 27, "loot": ["Iron Crystal", "Silver Ore", "Gold Ore"], "flavor": "The field thickens; claims overlap and tempers shorten. Ore starts paying for the fuel."}, {"name": "Rogue Cluster", "range": "800\u20131,999km out", "odds": 18, "loot": ["Gold Crystal", "Emerald Shard", "Ruby Core"], "flavor": "Uncharted rocks on bad trajectories \u2014 and gold in the cracks of every third one."}, {"name": "Nebula Core", "range": "2,000\u20134,999km out", "odds": 11, "loot": ["Ruby Star", "Sapphire Core", "Diamond Asteroid"], "flavor": "The nebula lights the drills. Ruby and sapphire condense where the gas runs hottest."}, {"name": "The Motherlode", "range": "5,000\u20139,999km out", "odds": 4, "loot": ["Diamond Singularity", "Hash Shard", "Motherlode Heart"], "flavor": "One traverse in twenty-five finds it: the rock every claim in the belt is named after."}];
+  var nodes=document.querySelectorAll(".rnode");
+  function show(i){
+    var d=data[i];
+    nodes.forEach(function(n,j){ n.classList.toggle("on", j===i); });
+    box.innerHTML="<b>WAYPOINT "+(i+1)+" — "+d.name.toUpperCase()+"</b> \u00b7 "+d.range+" \u00b7 "+d.odds+"% of all miners<br>"+d.flavor+"<br>Loot manifest: "+d.loot.join(", ")+".";
+  }
+  nodes.forEach(function(n){ n.addEventListener("click", function(){ show(Number(n.dataset.i)); }); });
+  show(0);
+})();
+</script>
+</body>
+</html>

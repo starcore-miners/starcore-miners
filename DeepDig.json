@@ -1,0 +1,924 @@
+[
+ {
+  "inputs": [
+   {
+    "internalType": "string",
+    "name": "name_",
+    "type": "string"
+   },
+   {
+    "internalType": "string",
+    "name": "symbol_",
+    "type": "string"
+   },
+   {
+    "internalType": "address",
+    "name": "treasury_",
+    "type": "address"
+   },
+   {
+    "internalType": "uint256",
+    "name": "cap_",
+    "type": "uint256"
+   },
+   {
+    "internalType": "string",
+    "name": "metric_",
+    "type": "string"
+   },
+   {
+    "internalType": "string",
+    "name": "unit_",
+    "type": "string"
+   },
+   {
+    "internalType": "string[5]",
+    "name": "layerNames_",
+    "type": "string[5]"
+   },
+   {
+    "internalType": "string[5]",
+    "name": "layerColors_",
+    "type": "string[5]"
+   },
+   {
+    "internalType": "string[15]",
+    "name": "lootNames_",
+    "type": "string[15]"
+   },
+   {
+    "internalType": "string[6]",
+    "name": "helmetNames_",
+    "type": "string[6]"
+   },
+   {
+    "internalType": "string[6]",
+    "name": "toolNames_",
+    "type": "string[6]"
+   },
+   {
+    "internalType": "string[5]",
+    "name": "outfitNames_",
+    "type": "string[5]"
+   },
+   {
+    "internalType": "string[4]",
+    "name": "buddyNames_",
+    "type": "string[4]"
+   }
+  ],
+  "stateMutability": "nonpayable",
+  "type": "constructor"
+ },
+ {
+  "anonymous": false,
+  "inputs": [
+   {
+    "indexed": true,
+    "internalType": "address",
+    "name": "owner",
+    "type": "address"
+   },
+   {
+    "indexed": true,
+    "internalType": "address",
+    "name": "approved",
+    "type": "address"
+   },
+   {
+    "indexed": true,
+    "internalType": "uint256",
+    "name": "tokenId",
+    "type": "uint256"
+   }
+  ],
+  "name": "Approval",
+  "type": "event"
+ },
+ {
+  "anonymous": false,
+  "inputs": [
+   {
+    "indexed": true,
+    "internalType": "address",
+    "name": "owner",
+    "type": "address"
+   },
+   {
+    "indexed": true,
+    "internalType": "address",
+    "name": "operator",
+    "type": "address"
+   },
+   {
+    "indexed": false,
+    "internalType": "bool",
+    "name": "approved",
+    "type": "bool"
+   }
+  ],
+  "name": "ApprovalForAll",
+  "type": "event"
+ },
+ {
+  "anonymous": false,
+  "inputs": [
+   {
+    "indexed": true,
+    "internalType": "address",
+    "name": "payee",
+    "type": "address"
+   },
+   {
+    "indexed": false,
+    "internalType": "uint256",
+    "name": "amount",
+    "type": "uint256"
+   }
+  ],
+  "name": "Credited",
+  "type": "event"
+ },
+ {
+  "anonymous": false,
+  "inputs": [
+   {
+    "indexed": true,
+    "internalType": "address",
+    "name": "buyer",
+    "type": "address"
+   },
+   {
+    "indexed": false,
+    "internalType": "uint256",
+    "name": "qty",
+    "type": "uint256"
+   },
+   {
+    "indexed": false,
+    "internalType": "uint256",
+    "name": "firstTokenId",
+    "type": "uint256"
+   },
+   {
+    "indexed": false,
+    "internalType": "bool",
+    "name": "free",
+    "type": "bool"
+   }
+  ],
+  "name": "Minted",
+  "type": "event"
+ },
+ {
+  "anonymous": false,
+  "inputs": [
+   {
+    "indexed": true,
+    "internalType": "uint256",
+    "name": "tokenId",
+    "type": "uint256"
+   },
+   {
+    "indexed": false,
+    "internalType": "uint8",
+    "name": "layer",
+    "type": "uint8"
+   },
+   {
+    "indexed": false,
+    "internalType": "uint16",
+    "name": "depth",
+    "type": "uint16"
+   }
+  ],
+  "name": "Revealed",
+  "type": "event"
+ },
+ {
+  "anonymous": false,
+  "inputs": [
+   {
+    "indexed": true,
+    "internalType": "address",
+    "name": "from",
+    "type": "address"
+   },
+   {
+    "indexed": true,
+    "internalType": "address",
+    "name": "to",
+    "type": "address"
+   },
+   {
+    "indexed": true,
+    "internalType": "uint256",
+    "name": "tokenId",
+    "type": "uint256"
+   }
+  ],
+  "name": "Transfer",
+  "type": "event"
+ },
+ {
+  "anonymous": false,
+  "inputs": [
+   {
+    "indexed": true,
+    "internalType": "address",
+    "name": "payee",
+    "type": "address"
+   },
+   {
+    "indexed": false,
+    "internalType": "uint256",
+    "name": "amount",
+    "type": "uint256"
+   }
+  ],
+  "name": "Withdrawn",
+  "type": "event"
+ },
+ {
+  "inputs": [],
+  "name": "MAX_PER_WALLET",
+  "outputs": [
+   {
+    "internalType": "uint256",
+    "name": "",
+    "type": "uint256"
+   }
+  ],
+  "stateMutability": "view",
+  "type": "function"
+ },
+ {
+  "inputs": [],
+  "name": "PRICE",
+  "outputs": [
+   {
+    "internalType": "uint256",
+    "name": "",
+    "type": "uint256"
+   }
+  ],
+  "stateMutability": "view",
+  "type": "function"
+ },
+ {
+  "inputs": [
+   {
+    "internalType": "address",
+    "name": "to",
+    "type": "address"
+   },
+   {
+    "internalType": "uint256",
+    "name": "tokenId",
+    "type": "uint256"
+   }
+  ],
+  "name": "approve",
+  "outputs": [],
+  "stateMutability": "nonpayable",
+  "type": "function"
+ },
+ {
+  "inputs": [
+   {
+    "internalType": "address",
+    "name": "owner",
+    "type": "address"
+   }
+  ],
+  "name": "balanceOf",
+  "outputs": [
+   {
+    "internalType": "uint256",
+    "name": "",
+    "type": "uint256"
+   }
+  ],
+  "stateMutability": "view",
+  "type": "function"
+ },
+ {
+  "inputs": [
+   {
+    "internalType": "uint256",
+    "name": "",
+    "type": "uint256"
+   }
+  ],
+  "name": "buddyNames",
+  "outputs": [
+   {
+    "internalType": "string",
+    "name": "",
+    "type": "string"
+   }
+  ],
+  "stateMutability": "view",
+  "type": "function"
+ },
+ {
+  "inputs": [],
+  "name": "cap",
+  "outputs": [
+   {
+    "internalType": "uint256",
+    "name": "",
+    "type": "uint256"
+   }
+  ],
+  "stateMutability": "view",
+  "type": "function"
+ },
+ {
+  "inputs": [],
+  "name": "freeMint",
+  "outputs": [],
+  "stateMutability": "nonpayable",
+  "type": "function"
+ },
+ {
+  "inputs": [
+   {
+    "internalType": "address",
+    "name": "",
+    "type": "address"
+   }
+  ],
+  "name": "freeUsed",
+  "outputs": [
+   {
+    "internalType": "bool",
+    "name": "",
+    "type": "bool"
+   }
+  ],
+  "stateMutability": "view",
+  "type": "function"
+ },
+ {
+  "inputs": [
+   {
+    "internalType": "uint256",
+    "name": "tokenId",
+    "type": "uint256"
+   }
+  ],
+  "name": "getApproved",
+  "outputs": [
+   {
+    "internalType": "address",
+    "name": "",
+    "type": "address"
+   }
+  ],
+  "stateMutability": "view",
+  "type": "function"
+ },
+ {
+  "inputs": [
+   {
+    "internalType": "uint256",
+    "name": "",
+    "type": "uint256"
+   }
+  ],
+  "name": "helmetNames",
+  "outputs": [
+   {
+    "internalType": "string",
+    "name": "",
+    "type": "string"
+   }
+  ],
+  "stateMutability": "view",
+  "type": "function"
+ },
+ {
+  "inputs": [
+   {
+    "internalType": "address",
+    "name": "owner",
+    "type": "address"
+   },
+   {
+    "internalType": "address",
+    "name": "operator",
+    "type": "address"
+   }
+  ],
+  "name": "isApprovedForAll",
+  "outputs": [
+   {
+    "internalType": "bool",
+    "name": "",
+    "type": "bool"
+   }
+  ],
+  "stateMutability": "view",
+  "type": "function"
+ },
+ {
+  "inputs": [
+   {
+    "internalType": "uint256",
+    "name": "",
+    "type": "uint256"
+   }
+  ],
+  "name": "layerColors",
+  "outputs": [
+   {
+    "internalType": "string",
+    "name": "",
+    "type": "string"
+   }
+  ],
+  "stateMutability": "view",
+  "type": "function"
+ },
+ {
+  "inputs": [
+   {
+    "internalType": "uint256",
+    "name": "",
+    "type": "uint256"
+   }
+  ],
+  "name": "layerNames",
+  "outputs": [
+   {
+    "internalType": "string",
+    "name": "",
+    "type": "string"
+   }
+  ],
+  "stateMutability": "view",
+  "type": "function"
+ },
+ {
+  "inputs": [
+   {
+    "internalType": "uint256",
+    "name": "",
+    "type": "uint256"
+   }
+  ],
+  "name": "lootNames",
+  "outputs": [
+   {
+    "internalType": "string",
+    "name": "",
+    "type": "string"
+   }
+  ],
+  "stateMutability": "view",
+  "type": "function"
+ },
+ {
+  "inputs": [],
+  "name": "metric",
+  "outputs": [
+   {
+    "internalType": "string",
+    "name": "",
+    "type": "string"
+   }
+  ],
+  "stateMutability": "view",
+  "type": "function"
+ },
+ {
+  "inputs": [
+   {
+    "internalType": "uint256",
+    "name": "qty",
+    "type": "uint256"
+   }
+  ],
+  "name": "mint",
+  "outputs": [],
+  "stateMutability": "payable",
+  "type": "function"
+ },
+ {
+  "inputs": [
+   {
+    "internalType": "address",
+    "name": "",
+    "type": "address"
+   }
+  ],
+  "name": "mintedBy",
+  "outputs": [
+   {
+    "internalType": "uint256",
+    "name": "",
+    "type": "uint256"
+   }
+  ],
+  "stateMutability": "view",
+  "type": "function"
+ },
+ {
+  "inputs": [],
+  "name": "name",
+  "outputs": [
+   {
+    "internalType": "string",
+    "name": "",
+    "type": "string"
+   }
+  ],
+  "stateMutability": "view",
+  "type": "function"
+ },
+ {
+  "inputs": [
+   {
+    "internalType": "uint256",
+    "name": "",
+    "type": "uint256"
+   }
+  ],
+  "name": "outfitNames",
+  "outputs": [
+   {
+    "internalType": "string",
+    "name": "",
+    "type": "string"
+   }
+  ],
+  "stateMutability": "view",
+  "type": "function"
+ },
+ {
+  "inputs": [
+   {
+    "internalType": "uint256",
+    "name": "tokenId",
+    "type": "uint256"
+   }
+  ],
+  "name": "ownerOf",
+  "outputs": [
+   {
+    "internalType": "address",
+    "name": "",
+    "type": "address"
+   }
+  ],
+  "stateMutability": "view",
+  "type": "function"
+ },
+ {
+  "inputs": [
+   {
+    "internalType": "address",
+    "name": "",
+    "type": "address"
+   }
+  ],
+  "name": "pendingWithdrawals",
+  "outputs": [
+   {
+    "internalType": "uint256",
+    "name": "",
+    "type": "uint256"
+   }
+  ],
+  "stateMutability": "view",
+  "type": "function"
+ },
+ {
+  "inputs": [
+   {
+    "internalType": "uint256",
+    "name": "tokenId",
+    "type": "uint256"
+   }
+  ],
+  "name": "reveal",
+  "outputs": [],
+  "stateMutability": "nonpayable",
+  "type": "function"
+ },
+ {
+  "inputs": [
+   {
+    "internalType": "address",
+    "name": "from",
+    "type": "address"
+   },
+   {
+    "internalType": "address",
+    "name": "to",
+    "type": "address"
+   },
+   {
+    "internalType": "uint256",
+    "name": "tokenId",
+    "type": "uint256"
+   }
+  ],
+  "name": "safeTransferFrom",
+  "outputs": [],
+  "stateMutability": "nonpayable",
+  "type": "function"
+ },
+ {
+  "inputs": [
+   {
+    "internalType": "address",
+    "name": "from",
+    "type": "address"
+   },
+   {
+    "internalType": "address",
+    "name": "to",
+    "type": "address"
+   },
+   {
+    "internalType": "uint256",
+    "name": "tokenId",
+    "type": "uint256"
+   },
+   {
+    "internalType": "bytes",
+    "name": "data",
+    "type": "bytes"
+   }
+  ],
+  "name": "safeTransferFrom",
+  "outputs": [],
+  "stateMutability": "nonpayable",
+  "type": "function"
+ },
+ {
+  "inputs": [
+   {
+    "internalType": "address",
+    "name": "operator",
+    "type": "address"
+   },
+   {
+    "internalType": "bool",
+    "name": "approved",
+    "type": "bool"
+   }
+  ],
+  "name": "setApprovalForAll",
+  "outputs": [],
+  "stateMutability": "nonpayable",
+  "type": "function"
+ },
+ {
+  "inputs": [],
+  "name": "status",
+  "outputs": [
+   {
+    "internalType": "uint256",
+    "name": "minted",
+    "type": "uint256"
+   },
+   {
+    "internalType": "uint256",
+    "name": "supplyCap",
+    "type": "uint256"
+   },
+   {
+    "internalType": "uint256",
+    "name": "price",
+    "type": "uint256"
+   },
+   {
+    "internalType": "uint256",
+    "name": "left",
+    "type": "uint256"
+   }
+  ],
+  "stateMutability": "view",
+  "type": "function"
+ },
+ {
+  "inputs": [
+   {
+    "internalType": "bytes4",
+    "name": "interfaceId",
+    "type": "bytes4"
+   }
+  ],
+  "name": "supportsInterface",
+  "outputs": [
+   {
+    "internalType": "bool",
+    "name": "",
+    "type": "bool"
+   }
+  ],
+  "stateMutability": "pure",
+  "type": "function"
+ },
+ {
+  "inputs": [],
+  "name": "symbol",
+  "outputs": [
+   {
+    "internalType": "string",
+    "name": "",
+    "type": "string"
+   }
+  ],
+  "stateMutability": "view",
+  "type": "function"
+ },
+ {
+  "inputs": [
+   {
+    "internalType": "uint256",
+    "name": "tokenId",
+    "type": "uint256"
+   }
+  ],
+  "name": "tokenURI",
+  "outputs": [
+   {
+    "internalType": "string",
+    "name": "",
+    "type": "string"
+   }
+  ],
+  "stateMutability": "view",
+  "type": "function"
+ },
+ {
+  "inputs": [
+   {
+    "internalType": "address",
+    "name": "owner",
+    "type": "address"
+   }
+  ],
+  "name": "tokensOfOwner",
+  "outputs": [
+   {
+    "internalType": "uint256[]",
+    "name": "",
+    "type": "uint256[]"
+   }
+  ],
+  "stateMutability": "view",
+  "type": "function"
+ },
+ {
+  "inputs": [
+   {
+    "internalType": "uint256",
+    "name": "",
+    "type": "uint256"
+   }
+  ],
+  "name": "toolNames",
+  "outputs": [
+   {
+    "internalType": "string",
+    "name": "",
+    "type": "string"
+   }
+  ],
+  "stateMutability": "view",
+  "type": "function"
+ },
+ {
+  "inputs": [],
+  "name": "totalMinted",
+  "outputs": [
+   {
+    "internalType": "uint256",
+    "name": "",
+    "type": "uint256"
+   }
+  ],
+  "stateMutability": "view",
+  "type": "function"
+ },
+ {
+  "inputs": [
+   {
+    "internalType": "uint256",
+    "name": "tokenId",
+    "type": "uint256"
+   }
+  ],
+  "name": "traitsOf",
+  "outputs": [
+   {
+    "internalType": "bool",
+    "name": "revealed",
+    "type": "bool"
+   },
+   {
+    "internalType": "uint8",
+    "name": "layer",
+    "type": "uint8"
+   },
+   {
+    "internalType": "uint16",
+    "name": "depth",
+    "type": "uint16"
+   },
+   {
+    "internalType": "uint8",
+    "name": "loot",
+    "type": "uint8"
+   },
+   {
+    "internalType": "uint8",
+    "name": "helmet",
+    "type": "uint8"
+   },
+   {
+    "internalType": "uint8",
+    "name": "tool",
+    "type": "uint8"
+   },
+   {
+    "internalType": "uint8",
+    "name": "outfit",
+    "type": "uint8"
+   },
+   {
+    "internalType": "uint8",
+    "name": "buddy",
+    "type": "uint8"
+   },
+   {
+    "internalType": "uint64",
+    "name": "mintBlock",
+    "type": "uint64"
+   }
+  ],
+  "stateMutability": "view",
+  "type": "function"
+ },
+ {
+  "inputs": [
+   {
+    "internalType": "address",
+    "name": "from",
+    "type": "address"
+   },
+   {
+    "internalType": "address",
+    "name": "to",
+    "type": "address"
+   },
+   {
+    "internalType": "uint256",
+    "name": "tokenId",
+    "type": "uint256"
+   }
+  ],
+  "name": "transferFrom",
+  "outputs": [],
+  "stateMutability": "nonpayable",
+  "type": "function"
+ },
+ {
+  "inputs": [],
+  "name": "treasury",
+  "outputs": [
+   {
+    "internalType": "address",
+    "name": "",
+    "type": "address"
+   }
+  ],
+  "stateMutability": "view",
+  "type": "function"
+ },
+ {
+  "inputs": [],
+  "name": "unit",
+  "outputs": [
+   {
+    "internalType": "string",
+    "name": "",
+    "type": "string"
+   }
+  ],
+  "stateMutability": "view",
+  "type": "function"
+ },
+ {
+  "inputs": [],
+  "name": "withdraw",
+  "outputs": [],
+  "stateMutability": "nonpayable",
+  "type": "function"
+ }
+]
